@@ -1,8 +1,8 @@
-import { price } from "./priceInterface";
-export interface items {
+import { Price } from "./priceInterface";
+export interface Item {
   id: string;
   title: string;
-  price: price;
+  price: Price;
   picture?: string;
   condition?: string;
   free_shipping?: boolean;

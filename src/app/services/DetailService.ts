@@ -21,18 +21,20 @@ export default class DetailService {
           name: "wilmer",
           lastname: "hernandez",
         },
-        items: [
-          {
+        item: {
             id: data.id,
             title: data.title,
-            price: data.price,
+            price: {
+              amount: data.price,
+              currency: "CO",
+              decimals: 0,
+            },
             picture: data.pictures[0].secure_url,
             condition: data.condition,
             free_shipping: data.shipping.free_shipping,
             sold_quantity: data.sold_quantity,
             description: data.descriptions,
-          },
-        ],
+          },        
       };
       res.status(constants.HTTP_STATUS_OK).send(response);
     } catch (error) {

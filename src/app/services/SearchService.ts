@@ -15,16 +15,12 @@ export default class SearchService {
         config.meli.domain,
         config.meli.paths.search + req.query.search + "&limit=4"
       );
-      let response: ResponseData = {
+      const response: ResponseData = {
         author: {
           name: "wilmer",
           lastname: "hernandez",
         },
-        items: [],
-        categories: [],
-      };
-      data.results.map((element: any, index: any) => {
-        response.items[index] = {
+        items: data.results.map((element: any) => ({
           id: element.id,
           title: element.title,
           price: {
@@ -36,11 +32,9 @@ export default class SearchService {
           condition: element.condition,
           free_shipping: element.shipping.free_shipping,
           address: element.address.state_name,
-        };
-      });
-      data.filters[0].values.map((element: any) => {
-        response.categories?.push(element.name);
-      });
+        })),
+        categories: data.filters.find((i: any) => i.id === "category")?.values.map((element: any) => element.name),
+      };
 
       res.status(constants.HTTP_STATUS_OK).send(response);
     } catch (error) {

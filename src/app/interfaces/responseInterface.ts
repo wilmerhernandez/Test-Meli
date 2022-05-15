@@ -1,7 +1,8 @@
-import { author } from "./author";
-import { items } from "./itemsInterface";
+import { Author } from "./author";
+import { Item } from "./itemsInterface";
 export interface ResponseData {
-  author: author;
+  author: Author;
   categories?: string[];
-  items: items[];
+  items?: Item[];
+  item?: Item;
 }
