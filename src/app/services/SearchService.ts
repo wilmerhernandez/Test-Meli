@@ -3,22 +3,45 @@ import { constants } from "http2";
 import config from "../config";
 import { ResponseData } from "../interfaces/responseInterface";
 import httpService from "./httpService";
-
+/**
+ * class for service by search of products
+ * add domain of config
+ * map data response
+ */
 export default class SearchService {
   public static async execute(req: Request, res: Response) {
     try {
       const data = await httpService.execute(
         config.meli.domain,
-        config.meli.paths.search + req.query.search+'&limit=4'
+        config.meli.paths.search + req.query.search + "&limit=4"
       );
       let response: ResponseData = {
         author: {
           name: "wilmer",
           lastname: "hernandez",
         },
-        items: data.results,
-        categories:data.filters
+        items: [],
+        categories: [],
       };
+      data.results.map((element: any, index: any) => {
+        response.items[index] = {
+          id: element.id,
+          title: element.title,
+          price: {
+            amount: element.price,
+            currency: "CO",
+            decimals: 0,
+          },
+          picture: element.thumbnail,
+          condition: element.condition,
+          free_shipping: element.shipping.free_shipping,
+          address: element.address.state_name,
+        };
+      });
+      data.filters[0].values.map((element: any) => {
+        response.categories?.push(element.name);
+      });
+
       res.status(constants.HTTP_STATUS_OK).send(response);
     } catch (error) {
       res.status(constants.HTTP_STATUS_BAD_REQUEST).send(error);
