@@ -3,9 +3,10 @@ export interface items {
   id: string;
   title: string;
   price: price;
-  picture?: string;
+  picture?: object[];
   condition?: string;
-  free_shipping?: boolean;
-  ssold_quantity?: number;
-  sdescriptions?: string;
+  free_shipping?: object;
+  sold_quantity?: number;
+  description?: string;
+  
 }
